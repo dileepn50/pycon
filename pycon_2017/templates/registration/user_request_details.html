@@ -1,0 +1,33 @@
+<html>
+{% include "base.html" %}
+	<head>
+	</head>
+		<body>
+		<div class='container'>
+			<h2>
+				Hello {{ user_details.first_name }}, Welcome
+			</h2>
+			<br>
+			<br>
+			<h3>
+			Here is your contact details. 
+			</h3>
+			<br>
+			<h4>
+			phone number: {{ user_details.phone_number}}
+			<br>
+			email: {{ user_details.email}}
+			<br>
+			Company name: {{ user_details.company }}
+			<br>
+			Your address: <br>
+			state: {{ user_details.state }}
+			<br>
+			pincode: {{ user_details.pincode }}
+			</h4>
+			<br>
+			uploaded file: <img src="{{ user_details.uploaded_file.url }}" width='300px' height='150px'/> 
+		</div>
+	</body>
+
+</html>

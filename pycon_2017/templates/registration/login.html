@@ -1,0 +1,25 @@
+	<html>
+		{% include "base.html" %}
+		<head>
+		<br>
+		</head>
+	<body>
+		<div class='container'>
+
+			<h1>
+				Welcome
+			</h1>
+			<h2>
+
+					Please give the login details
+			</h2>
+
+		<form method="post">
+			{% csrf_token %}
+
+			{{ form.as_p }}
+			<button type="submit">login </button>
+		</form>
+		</div>
+	</body>
+</html>

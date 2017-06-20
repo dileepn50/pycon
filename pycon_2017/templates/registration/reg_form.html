@@ -1,0 +1,14 @@
+<html>
+{% include "base.html" %}
+	<head>
+	</head>
+	<body>
+		<div class='container'>
+			<form method='post' action='/app/register'>
+	    		{% csrf_token %}
+				{{ form.as_p }}
+				<button type='submit'>submit</button>
+			</form>
+		</div>
+	</body>
+</html>
