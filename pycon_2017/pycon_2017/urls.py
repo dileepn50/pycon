@@ -24,6 +24,7 @@ from pycon_2017 import settings
 
 
 urlpatterns = [
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^$', include(app_urls)),
     url(r'accounts/profile/', include(app_urls)),
     url(r'^admin/', admin.site.urls),

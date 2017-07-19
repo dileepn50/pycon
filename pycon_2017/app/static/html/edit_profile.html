@@ -1,0 +1,21 @@
+<div class='container'>
+	 <link rel='stylesheet' type='text/css' href='/static/css/style.css'></link>
+     <br><br><br>
+		<form name="myForm" method='post' action='/app/edit_profile' novalidate>
+            <h5 class='input-details'>Firstname:<span style='display:inline-block; width:150px;'></span><input type='text' name="first_name" ng-model="first_name" size="30" maxlength="10"required></input>
+            <span class='error-condition' ng-show="myForm.first_name.$touched && myForm.first_name.$invalid">The firstname is required.</span>
+        </h5>
+        <h5 class='input-details'>Lastname: <span style='display:inline-block; width:150px;'></span><input type='text' name='last_name' ng-model="last_name" size="30"  maxlength="10" required></input>
+            <span class='error-condition' ng-show="myForm.last_name.$touched && myForm.last_name.$invalid">The lastname is required.</span>
+        </h5> 
+		<h5 class='input-details'>Email:<span style='display:inline-block; width:180px;'></span> <input type='email' name='email' ng-model='email' size="30" required></input>
+            <span class='error-condition' ng-show="myForm.email.$dirty && myForm.email.$touched && myForm.email.$invalid">email id is invalid.</span>
+            <span class='error-condition' ng-show="myForm.email.$touched && myForm.email.$error.required">email id is required</span>
+        </h5> 
+		<br>
+		<br>
+        <br>
+        <span style='display:inline-block; width:180px;'></span>
+        <input type='submit' ng-disabled="myForm.first_name.$invalid || myForm.last_name.$invalid || myForm.phone_number.$invalid || myForm.email.$invalid || myForm.company.$invalid || myForm.address.$invalid || myForm.state.$invalid."/> 
+	</form>
+</div>

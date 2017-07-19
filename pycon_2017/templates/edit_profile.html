@@ -1,0 +1,8 @@
+<div class='container'>
+	<form method='post' action='/app/edit_profile'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<button type='submit'>submit</button>
+		</form>
+</div>

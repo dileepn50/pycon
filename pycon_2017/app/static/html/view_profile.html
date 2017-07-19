@@ -1,0 +1,66 @@
+<div class='container' ng-controller='ctrl_view_profile'>
+	<h2> User Details</h2>
+	<br>
+	<br>
+	<h4>
+	Name:{{ user_details.username }}
+	<br>
+	email id:{{ user_details.email }}
+	<br>
+	<span ng-if='user_details.first_name'> 
+	first name: 
+		{{ user_details.first_name }}
+	</span>
+	<br>
+	last name: {{ user_details.last_name }}
+	</br>
+	<ul>
+	<li ng-repeat="i in list">
+		{{ i.name}}
+	</li>
+	</ul>
+	<span>name:</span><input type='text' ng-model='ng1'> </input>
+	<br>
+	<br>name is:<span ng-bind='ng1'> </span>
+	<br>
+	<br>
+	<!--
+	<select ng-model="st_li"  ng-options="state for state in StateList">
+	</select>
+	-->
+	 
+	<select ng-model="st_list">
+			<option ng-repeat="state in StateList" >{{ state }}</option>
+	</select>	
+	<br>
+	{{ st_list }}
+	{{ ng1 }}
+	<br>
+	<table border="1" width="100%">
+  <tr>
+    <th ng-click="sort_array('name')">Name</th>
+    <th ng-click="sort_array('country')">Country</th>
+  </tr>
+  <tr ng-repeat="x in names | orderBy:myOrderBy | filter: ng1">
+    <td>{{x.name}}</td>
+    <td>{{x.country}}</td>
+  </tr>
+</table>
+
+<br>
+page location: <a href="{{ current_location }}">current page</a>
+<br>
+{{ message }}
+{{ current_time }}
+<br>
+<button ng-click='change_status()'>click here</button>
+<br>
+<div ng-show="showMe">
+	<h4>abc</h4>
+	<h4>def</h4>
+	<h4>jkl</h4>
+</div>
+
+
+ 
+</div>

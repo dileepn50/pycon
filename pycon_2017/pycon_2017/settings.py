@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(BASE_DIR)
+#print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -26,10 +26,10 @@ SECRET_KEY = 'fgc%2m=*tiw*+=wm6f_g@^m!8ifr!fj(gmt)+ray=2nf7!e#2&'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 STATIC_DIRS = [os.path.join(BASE_DIR, 'app')]
+print('-' * 10)
+print(BASE_DIR)
 # Application definition
-print(STATIC_DIRS)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,8 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'app',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.permissions.IsAuthenticated',
+    )
+} 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

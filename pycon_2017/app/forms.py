@@ -6,14 +6,12 @@ import localflavor.in_.forms as loc_in
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
 
-
+    email = forms.EmailField(required=True, help_text='enter valid email address')
+    username = forms.CharField(required=True, help_text='enter username')
     class Meta:
         model = User
         fields = ('username',
-                'first_name',
-                'last_name',
                 'email',
                 'password1',
                 'password2'
@@ -26,7 +24,6 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
@@ -36,7 +33,6 @@ class EditProfileForm(UserChangeForm):
                 'password',
                 )
 
-
 class HomeForm(forms.ModelForm):
     #phone_number = PhoneNumberPrefixWidget() 
     #phone_number = loc_in.STATE_CHOICES
@@ -44,8 +40,7 @@ class HomeForm(forms.ModelForm):
     pincode = loc_in.INZipCodeField()
     class Meta:
         model = reg_conference 
-        fields = ('first_name', 'last_name', 'phone_number', 'email', 'company', 'address', 'state', 'pincode', 'uploaded_file')
-
+        fields = ('first_name', 'last_name', 'phone_number', 'email', 'company', 'address', 'state', 'pincode')
 
 
 

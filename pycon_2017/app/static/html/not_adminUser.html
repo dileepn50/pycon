@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block not_adminUser %}
+	<div class='container'>
+		{% if not authorized %}
+			<h3>	
+				Hello, {{ username }}
+				<br>
+			</h3>
+			<h4>
+				Your are not authorized to browse this page. 
+				<br>
+			</h4>
+		{% else %}
+
+
+
+	</div>
+{% endblock %}
