@@ -44,14 +44,18 @@ def register(request):
 
 def request_status(request):
     user_object = User.objects.get(username=request.user)
-    reg_user_object = reg_conference.objects.get(user = user_object)
-    print('-' * 20)
-    print(reg_user_object.email)
-    print('-' * 20)
+    try:
+        reg_user_object = reg_conference.objects.get(user = user_object)
+        print('-' * 20)
+        print(reg_user_object.email)
+        print('-' * 20)
+    except reg_conference.DoesNotExist:        
+        args = {'username': str(request.user), 'not_registered': 'True'}
+        return JsonResponse(args, safe=False)
     approve_status_details = {'c': 'cancelled', 'a': 'approved', 'w': 'weightinglist', 'y': 'yet to check'}
-    args = {'username': request.user, 'status': approve_status_details[reg_user_object.approve_status]}
+    args = {'username': str(request.user), 'status': approve_status_details[reg_user_object.approve_status], 'not_registered': 'False'}
     print(args)
-    return HttpResponse('ok')
+    return JsonResponse(args, safe=False)
 
 #@login_required
 class view_profile(APIView):

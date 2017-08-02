@@ -111,13 +111,13 @@ function fun_get_userDetail($scope, $http, $routeParams)
 		});
 }
 
-fucntion fun_get_requestStatus($scope, $http)
+function fun_get_requestStatus($scope, $http)
 {
 	var url = '/app/request_status';
-	$http.get(url).then(function(response))
+	$http.get(url).then(function(response)
 		{
 			$scope.details = response.data;
-		}
+		});
 }		
 
 
@@ -159,7 +159,7 @@ app.config(function($routeProvider)
    .when("/app/request_status", {
 		   templateUrl: '/static/html/request_status.html',
    			controller: 'ctrl_get_requestStatus'
-		   )
+	})
 });
 
 
