@@ -77,7 +77,7 @@ function fun_request_details($scope, $http)
 function fun_not_adminUser($scope, $http)
 {
 	var url = '/app/admin';
-	alert('fun_not_adminUser');
+	//alert('fun_not_adminUser');
 	$http.get(url).then(function(response)
 		{
 			$scope.details = response.data;
@@ -98,11 +98,36 @@ function fun_not_adminUser($scope, $http)
 		}
 		);
 }
+
+function fun_get_userDetail($scope, $http, $routeParams)
+{
+	var url = '/app/get_user_details/' + $routeParams.username;
+	//alert('fun_get_userDetail');
+	$http.get(url).then(function(response)
+		{
+			//alert(response.data);
+			$scope.details = response.data;
+			$scope.username = $scope.details.username;
+		});
+}
+
+fucntion fun_get_requestStatus($scope, $http)
+{
+	var url = '/app/request_status';
+	$http.get(url).then(function(response))
+		{
+			$scope.details = response.data;
+		}
+}		
+
+
 app.controller('ctrl_view_profile', fun_view_profile);
 app.controller('ctrl_edit_profile', fun_edit_profile);
 app.controller('ctrl_reg_conference', fun_reg_conference);
 app.controller('ctrl_request_details', fun_request_details);
 app.controller('ctrl_not_adminUser', fun_not_adminUser);
+app.controller('ctrl_get_userDetail', fun_get_userDetail);
+app.controller('ctrl_get_requestStatus', fun_get_requestStatus);
 
 app.config(function($routeProvider)
 {
@@ -127,6 +152,14 @@ app.config(function($routeProvider)
 		   templateUrl: '/static/html/not_adminUser.html',
    			controller: 'ctrl_not_adminUser'
    })
+   .when("/app/get_user_details/:username", {
+		   templateUrl: '/static/html/get_userDetail.html',
+   		   controller: 'ctrl_get_userDetail'
+	})
+   .when("/app/request_status", {
+		   templateUrl: '/static/html/request_status.html',
+   			controller: 'ctrl_get_requestStatus'
+		   )
 });
 
 

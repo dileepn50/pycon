@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.views.decorators.csrf import csrf_exempt
 
-from app.views import base, HomeView, edit_profile, view_profile, get_states, admin_user
+from app.views import base, HomeView, edit_profile, view_profile, get_states, admin_user, reg_user_details, add_state, request_status
 
 from . import views
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
         url(r'login_page$', csrf_exempt(auth_views.login), {'template_name': 'login.html'}),
         url(r'logout_page$', csrf_exempt(auth_views.logout), {'template_name': 'logout.html'}),
         url(r'register$', views.register),
+        url(r'request_status', request_status),
         url(r'view_profile$', view_profile.as_view(), name = 'index'),
         url(r'edit_profile$', csrf_exempt(edit_profile.as_view()), name = 'edit_super'),
         url(r'change_password$', views.change_password),
@@ -24,4 +25,9 @@ urlpatterns = [
         url('post_request$', csrf_exempt(HomeView.as_view())),
         url('request_details$', views.request_details),
         url('state_list$', views.get_states),
+        url('get_user_details/$',csrf_exempt(reg_user_details.as_view())),
+        url('get_user_details/([a-zA-Z]*)$',csrf_exempt(reg_user_details.as_view())),
+        url('add_state$', csrf_exempt(add_state)),
         ]
+
+

@@ -1,0 +1,35 @@
+<div class='container'>
+	<br>
+	<br>
+	<h4>Contestant Details</h4>
+	<br>
+	<a href='/#!/app/admin'>back</a>
+	<form method='post' action='/app/get_user_details/'>
+		<input type='text' name='username' ng-model='username' style='display:none;'></input>
+		<h6 ng-if="details.username" name='username'>username:{{ details.username }}</h6>
+		<h6 ng-if="details.first_name">firstname:{{ details.first_name }}</h6>
+		<h6 ng-if="details.last_name">lastname: {{ details.last_name }}</h6>
+		<h6 ng-if="details.email">email: {{ details.email }} </h6>
+		<h6 ng-if="details.phone_number">phone number:{{ details.phone_number }}</h6>
+		<h6 ng-if="details.address">address:{{ details.address }} </h6>
+		<h6 ng-if="details.state">state:{{ details.state }} </h6>		
+		<span ng-if="details.approve_status">
+			<h6>approve status: 
+				<select name='approve_status' id='approve_status'>
+					<option ng-if="details.approve_status == 'a'"  value='a' selected>approved</option>
+					<option ng-if="details.approve_status != 'a'" value='a'>approved</option>
+					<option ng-if="details.approve_status == 'c'" value='c' selected>cancelled</option>
+					<option ng-if="details.approve_status != 'c'" value='c'>cancelled</option>
+					<option ng-if="details.approve_status == 'w'" value='w' selected>weightinglist</option>
+					<option ng-if="details.approve_status != 'w'" value='w'>weightinglist</option>	
+					<option ng-if="details.approve_status == 'y'" value='y' selected>yet to check</option>
+					<option ng-if="details.approve_status != 'y'" value='y'>yet to check</option>
+				</select>
+			</h6>
+		</span>
+		<br>
+		<br>
+		<span style='display:inline-block; width:180px;'></span>
+		<button type='submit'>save changes</button>
+	</form>
+</div>

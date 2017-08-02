@@ -1,18 +1,45 @@
-{% extends "base.html" %}
-{% block not_adminUser %}
-	<div class='container'>
-		{% if not authorized %}
-			<h3>	
-				Hello, {{ username }}
-				<br>
-			</h3>
-			<h4>
-				Your are not authorized to browse this page. 
-				<br>
-			</h4>
-		{% else %}
-
-
-
-	</div>
-{% endblock %}
+<div class='container'>
+	<style>
+	    #state_list, #add_state {
+						   width: 40%;
+						   display: inline-block;
+						   float: left;
+						} 	
+	</style>
+	<span ng-if="details.authorized == 'False'">
+		<h3>	
+			Hello, {{ details.admin }}
+			<br>
+			<br>
+			<br>
+		</h3>
+		Your are not authorized to browse this page. 
+	</span>
+	<span ng-if="details.authorized == 'True'">
+		<h3>	
+			Hello, {{ details.admin }}
+			<br>
+			<br>
+			<br>
+		</h3>
+		<h3>Participating contestants list</h3>	
+		search name: <input type='text' ng-model='contestant'></input><br>
+		<br>
+		<table>
+				<tr ng-repeat="i in details.user_list | filter: contestant">
+					<td><a href='/#!/app/get_user_details/{{i.username}}'>{{ i.username }}</a></td>
+				</tr>			
+		</table>
+			<div id='state_list'>
+				<h3>state list</h3>
+				<h6 ng-repeat="state in details.state_list">
+					{{ state }}
+				</h6>
+			</div>
+			<div id='add_state'>
+				<form method='post' action='/app/add_state'>
+				<h5>add state:</h5>
+				<input type='text' name='name' size=25 maxlength=20></input><span style='display:inline-block; width:20px;'></span><button type='submit'>add</button>
+			</div>
+	</span>
+</div>

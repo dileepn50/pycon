@@ -18,7 +18,7 @@ from rest_framework.views import APIView
 from django.http import Http404
 
 from django.db import IntegrityError
-from .serializers import UserSerializer, state_listSerializer, reg_conferenceSerializer 
+from .serializers import UserSerializer, state_listSerializer, reg_conferenceSerializer, reg_userSerializer 
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
@@ -40,6 +40,18 @@ def register(request):
         form = RegistrationForm()
         print(form)
         return render(request, 'reg_form.html', {'form': form})
+
+
+def request_status(request):
+    user_object = User.objects.get(username=request.user)
+    reg_user_object = reg_conference.objects.get(user = user_object)
+    print('-' * 20)
+    print(reg_user_object.email)
+    print('-' * 20)
+    approve_status_details = {'c': 'cancelled', 'a': 'approved', 'w': 'weightinglist', 'y': 'yet to check'}
+    args = {'username': request.user, 'status': approve_status_details[reg_user_object.approve_status]}
+    print(args)
+    return HttpResponse('ok')
 
 #@login_required
 class view_profile(APIView):
@@ -108,7 +120,8 @@ class HomeView(TemplateView):
             return render(request, 'request_confirmation.html')
         else:
             print(reg_conf_serializer)
-            error = reg_conf_serializer.errors
+            errors = reg_conf_serializer.errors
+            print(errors)
             error = "Input's you given are not correct. Please give the correct input details" 
             '''
             args = {'form': form, 'error': error}
@@ -138,8 +151,73 @@ def get_states(request):
 
 def admin_user(request):
    user = User.objects.get(username=request.user) 
-   if user.is_staff:
-       args = { 'authorized': False, 'username': user.username }
+   if not user.is_staff:
+       print('-'* 15)
+       print(user.is_staff)
+       print('-'* 15)
+       args = { 'authorized': str(user.is_staff), 'admin': user.username }
+       print(args)
        return JsonResponse(args)
+   else:
+       registered_user_list = [registered_user.user for registered_user in reg_conference.objects.all()]
+       print('-'* 20)
+       print(registered_user_list)
+       print('-'* 20)
+       user_list = User.objects.all()
+       print(user_list)
+       #r_list = User.objects.filter(id__in=registered_user_list)
+       serializer = reg_userSerializer(registered_user_list, many=True)
+       state_names = [str(state) for state in state_list.objects.all()]
+       print(state_names)
+       args = {'authorized': str(user.is_staff), 'admin': str(request.user), 'user_list': serializer.data, 'state_list': state_names }
+       print('-' * 15)
+       print(args)
+       print('-' * 15)
+       return JsonResponse(args, safe=False)
+
+        
+class reg_user_details(TemplateView):
+    def get(self, request, username):
+        print('-' * 20)
+        print(username)
+        print('-' * 20)
+        user_object = User.objects.get(username=username)
+        user_reg_details = reg_conference.objects.get(user=user_object.id)
+        serializer = reg_conferenceSerializer(user_reg_details, many=False)
+        response_data = serializer.data
+        response_data['username'] = username
+        print(response_data)
+        return JsonResponse(response_data, safe=False)
+    def post(self, request):
+        username = request.POST['username']
+        approve_status = request.POST['approve_status']
+        user_object = User.objects.get(username=username)
+        user_details = reg_conference.objects.get(user=user_object.id)
+        user_details.approve_status = approve_status
+        user_details.save()
+        print('changes are saved')
+        return redirect('/#!/app/admin') 
+        
+
+def add_state(request):
+    state = request.POST['name']
+    print('-' * 20)
+    print(state)
+    print('-' * 20)
+    serializer = state_listSerializer(data=request.POST)
+    if serializer.is_valid():
+        state_object = state_list(name=state)
+        state_object.save()
+        print(state + ' is added to state list')
+    return redirect('/#!/app/admin')
+        
+
+
+
+
+
+
+
+
 
 
