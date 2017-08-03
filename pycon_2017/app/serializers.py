@@ -1,22 +1,20 @@
 from django.contrib.auth.models import User
-from .models import state_list, reg_conference
 from rest_framework import serializers
 
+from app import models as app_models 
 
 
-class state_listSerializer(serializers.ModelSerializer):
+class StateListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = state_list
+        model = app_models.state_list
         fields = ('name',)
 
 
-
-class reg_conferenceSerializer(serializers.ModelSerializer):
+class RegConferenceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = reg_conference
+        model = app_models.reg_conference
         #fields = ('first_name', 'last_name', 'phone_number', 'email', 'company', 'address', 'state', 'user')
         fields = ('first_name', 'last_name', 'email', 'company', 'address', 'state', 'phone_number', 'approve_status')
-
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'email', 'username', 'id')
 
 
-class reg_userSerializer(serializers.ModelSerializer):
+class RegUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username',)

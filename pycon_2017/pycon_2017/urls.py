@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'accounts/profile/', include(app_urls)),
     url(r'^admin/', admin.site.urls),
     url(r'app/', include(app_urls)),
-    url(r'^base', app_views.base),
 ]
 
 if settings.DEBUG:
