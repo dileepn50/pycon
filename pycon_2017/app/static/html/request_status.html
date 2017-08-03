@@ -1,17 +1,17 @@
 <div class='container'>
 	<br>
 	<br>
-	<h4>Request Status</h4>	
+	<h3>Request Status</h3>	
 	<br>
 	<span ng-if="details.not_registered == 'True'">
-		<h5>Hi, {{ details.username}} </h5>
+		<h4>Hi, {{ details.username}} </h4>
 		<br>
-		<h6> You are not submitted request form to participate in the conference.<br>You can request for the conference <a href='/#!/app/post_request'>here</a></h6>
+		<h5> You are not submitted request form to participate in the conference.<br>You can request for the conference <a href='/#!/app/post_request'>here</a></h5>
 	</span>
 	<span ng-if="details.not_registered == 'False'">
-		<h5>Hi, {{ details.username }}</h5>
+		<h4>Hi, {{ details.username }}</h4>
 		<br>
-		<h6>Your request for the conference is {{ details.status }}</h6>
+		<h5>Your request for the conference is {{ details.status }}</h5>
 	</span>
 	
 </div>
