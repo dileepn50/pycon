@@ -46,15 +46,11 @@ def request_status(request):
     user_object = User.objects.get(username=request.user)
     try:
         reg_user_object = reg_conference.objects.get(user = user_object)
-        print('-' * 20)
-        print(reg_user_object.email)
-        print('-' * 20)
     except reg_conference.DoesNotExist:        
         args = {'username': str(request.user), 'not_registered': 'True'}
         return JsonResponse(args, safe=False)
     approve_status_details = {'c': 'cancelled', 'a': 'approved', 'w': 'weightinglist', 'y': 'yet to check'}
     args = {'username': str(request.user), 'status': approve_status_details[reg_user_object.approve_status], 'not_registered': 'False'}
-    print(args)
     return JsonResponse(args, safe=False)
 
 #@login_required
@@ -88,7 +84,6 @@ class edit_profile(TemplateView):
             user.save()
             args = {'user': request.user.first_name}
             return render(request, 'profile_updated.html', args)
-        print(serializer.errors)
 
 @login_required
 def change_password(request):
@@ -151,22 +146,14 @@ def get_states(request):
     serializer = state_listSerializer(state_li, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-
-
 def admin_user(request):
    user = User.objects.get(username=request.user) 
    if not user.is_staff:
-       print('-'* 15)
-       print(user.is_staff)
-       print('-'* 15)
        args = { 'authorized': str(user.is_staff), 'admin': user.username }
        print(args)
        return JsonResponse(args)
    else:
        registered_user_list = [registered_user.user for registered_user in reg_conference.objects.all()]
-       print('-'* 20)
-       print(registered_user_list)
-       print('-'* 20)
        user_list = User.objects.all()
        print(user_list)
        #r_list = User.objects.filter(id__in=registered_user_list)
@@ -174,17 +161,11 @@ def admin_user(request):
        state_names = [str(state) for state in state_list.objects.all()]
        print(state_names)
        args = {'authorized': str(user.is_staff), 'admin': str(request.user), 'user_list': serializer.data, 'state_list': state_names }
-       print('-' * 15)
-       print(args)
-       print('-' * 15)
        return JsonResponse(args, safe=False)
 
         
 class reg_user_details(TemplateView):
     def get(self, request, username):
-        print('-' * 20)
-        print(username)
-        print('-' * 20)
         user_object = User.objects.get(username=username)
         user_reg_details = reg_conference.objects.get(user=user_object.id)
         serializer = reg_conferenceSerializer(user_reg_details, many=False)
@@ -199,7 +180,6 @@ class reg_user_details(TemplateView):
         user_details = reg_conference.objects.get(user=user_object.id)
         user_details.approve_status = approve_status
         user_details.save()
-        print('changes are saved')
         return redirect('/#!/app/admin') 
         
 
